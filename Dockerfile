@@ -23,8 +23,10 @@ ADD skel.tgz /etc/skel/
 
 ENV STAMAIN_PUID thierry 1000 1000
 ENV STAMAIN_PGID thierry 1000
+ENV STAMAIN_PASSWD mdpQuiCraint
 
 #conf supervisor
+RUN ssh-keygen -A
 RUN mkdir -p /var/run/sshd /var/log/supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ADD prepare.sh /

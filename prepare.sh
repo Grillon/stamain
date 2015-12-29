@@ -12,9 +12,7 @@ do
   done
   echo $2 | while read user userid groupid
 do
-  if [ "$3" == no_home ];then
-    gen no_home
-  fi
+    gen $3
   done
 }
 function hex {
@@ -28,11 +26,15 @@ fi
 /usr/sbin/useradd -u $userid -g $groupid -G wheel -s /bin/bash -d /home/$user -m $user
 }
 genprep "$STAMAIN_PGID" "$STAMAIN_PUID"
+if [ "$STAMAIN_PASSWD" == "mdpQuiCraint" ];then
+  STAMAIN_PASSWD=$(hex)
+fi
+echo "$user:${STAMAIN_PASSWD}" | /usr/sbin/chpasswd
 if [ "$STAMAIN_GID" ] && [ "$STAMAIN_UID" ];then
   genprep "$STAMAIN_GID" "$STAMAIN_UID" no_home
 fi
-if [ "$@" != "ssh" ];then
-  exec $@
-else
+if [ "$@" == "ssh" ];then
   exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+else
+  exec $@
 fi
