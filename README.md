@@ -53,7 +53,7 @@ docker run -p 22 -t -i grillon/stamain
  - **STAMAIN_PUID** nom uid gid du user principal
  - **STAMAIN_GID** nomGroupe gid
  - **STAMAIN_PGID** nomGroupe gid du groupe principal
- - **STAMAIN_PASSWORD** oups...
+ - **STAMAIN_PASSWD** oups...
 
 # References
 

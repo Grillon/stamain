@@ -4,7 +4,9 @@
 #STAMAIN_PUID user de maintenance : user userid groupid
 #STAMAIN_GID : group groupid
 #STAMAIN_PGID : group groupid
-
+STAMAIN_USER=$(echo $STAMAIN_PUID | while read user uid gid;do
+echo $user 
+done)
 function genprep {
 echo $1 | while read groupe groupid 
 do
@@ -29,11 +31,11 @@ genprep "$STAMAIN_PGID" "$STAMAIN_PUID"
 if [ "$STAMAIN_PASSWD" == "mdpQuiCraint" ];then
   STAMAIN_PASSWD=$(hex)
 fi
-echo "$user:${STAMAIN_PASSWD}" | /usr/sbin/chpasswd
+echo "$STAMAIN_USER:${STAMAIN_PASSWD}" | /usr/sbin/chpasswd
 if [ "$STAMAIN_GID" ] && [ "$STAMAIN_UID" ];then
   genprep "$STAMAIN_GID" "$STAMAIN_UID" no_home
 fi
-if [ "$@" == "ssh" ];then
+if [[ "$@" == "ssh" ]];then
   exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 else
   exec $@
