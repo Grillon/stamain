@@ -10,7 +10,7 @@ RUN yum -y install epel-release
 RUN yum -y install curl vim tmux git tig ctags
 
 #supervisor
-RUN yum -y install supervisor openssh-server openssh-client telnet passwd
+RUN yum -y install supervisor openssh-server openssh-client telnet passwd sudo
 
 
 RUN yum clean all && rm -Rf /tmp/* /var/tmp/*
